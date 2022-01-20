@@ -11,4 +11,4 @@ classB(1,:) = randn(1,n) .* sigmaB + mB(1);
 classB(2,:) = randn(1,n) .* sigmaB + mB(2);
 
 % Merge class A and B into single class and shuffle
-class = 0;
+class
