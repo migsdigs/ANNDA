@@ -19,6 +19,8 @@ class = max(sign(shuffle-n),0); % class A: 0, class B: 1
 
 % Plot patterns
 figure(1),clf(1), hold on
+axis([-10,10,-10,10])
+axis square
 scatter(classA(1,:),classA(2,:),'xr')
 scatter(classB(1,:),classB(2,:), 'ob')
 grid on
@@ -27,3 +29,27 @@ hold off
 %% Perceptron
 
 %% Delta learning rule
+eta = 0.0001; % Learning rate
+epoch = 100;
+W = randn(2,1); % Initialise weights using standard normal
+
+figure(1),
+h1 = animatedline;
+h2 = animatedline;
+for epoch = 1:epoch
+    dw = 0; % Reset dw
+    for i = 1:(2*n)
+        e = class(i) - W'*data(:,i);
+        dw = dw + eta*e*data(:,i); % Accumulate dw
+    end
+    W = W + dw; % Apply change
+    
+    % Plotting intermediate results
+    clearpoints(h1)
+    clearpoints(h2)
+    addpoints(h1,[0 W(1)/norm(W)],[0,W(2)/norm(W)]);
+    drawnow
+    addpoints(h2,[10*W(2)/W(1),-10*W(2)/W(1)],[-10,10])
+    drawnow
+    pause(0.05)
+end
