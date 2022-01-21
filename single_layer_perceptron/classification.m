@@ -1,3 +1,4 @@
+clear, clc
 %% Generate data to be used for binary classification
 
 n = 100; % number of samples per class
@@ -12,7 +13,9 @@ classB(2,:) = randn(1,n) .* sigmaB + mB(2);
 
 % Merge class A and B into single class and shuffle
 classAB = [classA, classB];
-data = classAB(:,randperm(2*n));
+shuffle = randperm(2*n);
+data = classAB(:,shuffle);
+class = max(sign(shuffle-n),0); % class A: 0, class B: 1
 
 % Plot patterns
 figure(1),clf(1), hold on
@@ -21,3 +24,6 @@ scatter(classB(1,:),classB(2,:), 'ob')
 grid on
 hold off
 
+%% Perceptron
+
+%% Delta learning rule
