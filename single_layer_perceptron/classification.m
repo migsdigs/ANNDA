@@ -11,6 +11,13 @@ classB(1,:) = randn(1,n) .* sigmaB + mB(1);
 classB(2,:) = randn(1,n) .* sigmaB + mB(2);
 
 % Merge class A and B into single class and shuffle
-class = [classA, classB];
-class = class(:, randperm(size(class, 2)));
+classAB = [classA, classB];
+data = classAB(:,randperm(2*n));
+
+% Plot patterns
+figure(1),clf(1), hold on
+scatter(classA(1,:),classA(2,:),'xr')
+scatter(classB(1,:),classB(2,:), 'ob')
+grid on
+hold off
 
