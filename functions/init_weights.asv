@@ -1,3 +1,0 @@
-function weight_matrix = init_weights(number_outputs, number_inputs, seed)
-    if nargin == 2
-end

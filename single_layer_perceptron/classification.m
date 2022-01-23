@@ -28,15 +28,76 @@ hold off
 
 %% Perceptron
 
+mode = 0; % 0 - sample-by-sample, 1 - batch
+bias = 0;
+
+eta = 0.0001;   % Learning rate
+epochs = 100;   % Number of full cycles through the patterns 
+W = init_weights(2,1);  % Initialise weights using standard normal
+w = W';
+
+for epoch = 1:epochs
+    dw = 0; 
+
+    for i = i:(2*n)
+        true_class = class(i);
+        y = w*data(:,i) - bias;
+
+        % Sequential Update
+        if mode == 0 % if in sample by sample
+            if y > 0
+                y = 1;
+                if true_class ~= y
+                    dw = eta*data(:,i);
+                    W = W - dw;
+                end
+            end
+    
+            if y < 0
+                y = 0;
+                if true_class ~= y
+                    dw = eta*data(:,i);
+                    W = W + dw;
+                end
+    
+            end
+        end
+
+        % Batch Update
+        if mode == 1
+            if y > 0
+                y = 1;
+                if true_class ~= y
+                    dw = dw - eta*data(:,i);
+                    %W = W - data(:,i);
+                end
+            end
+    
+            if y < 0
+                y = 0;
+                if true_class ~= y
+                    dw = dw + eta*data(:,i);
+                    %W = W + data(:,i);
+                end
+    
+            end
+        end
+        W = W + dw;
+    end
+    
+end
+
 %% Delta learning rule
+
+
 eta = 0.0001; % Learning rate
-epoch = 100;
+epochs = 500;
 W = randn(2,1); % Initialise weights using standard normal
 
 figure(1),
 h1 = animatedline;
 h2 = animatedline;
-for epoch = 1:epoch
+for epoch = 1:epochs
     dw = 0; % Reset dw
     for i = 1:(2*n)
         e = class(i) - W'*data(:,i);
